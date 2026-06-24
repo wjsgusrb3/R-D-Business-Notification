@@ -1,0 +1,6 @@
+{
+  "name": "RD-CONNECT",
+  "description": "AI 기반 R&D 지원사업 맞춤 매칭 플랫폼",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
