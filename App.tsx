@@ -146,8 +146,14 @@ export default function App() {
       });
       
       if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || "실시간 API 호출 실패");
+        // GitHub Pages나 정적 호스팅의 경우 404 HTML을 반환할 수 있으므로, json 파싱 전에 컨텐트 타입을 확인합니다.
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const errData = await response.json();
+          throw new Error(errData.error || "실시간 API 호출 실패");
+        } else {
+          throw new Error(`정적 웹 호스팅 환경(GitHub Pages)이 감지되었습니다. 실시간 AI API(/api/grants/search)를 호출할 수 없으므로 오프라인 최적화 매칭 엔진으로 안전하게 자동 전환되었습니다.`);
+        }
       }
       
       const data = await response.json();
